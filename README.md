@@ -1,16 +1,5 @@
 # jetty-12-rest-api-sample
 
-## TLDR
-
-Windows - Powershell
-```
-docker-compose build | docker-compose up
-```
-Linux - Bash
-```
-docker-compose build && docker-compose up
-```
-
 This project serves as a boilerplate for building pure Jetty 12 (Servlet) using the following technologies and tools:
 
 - [**Java 17**](https://www.oracle.com/br/java/technologies/downloads/): The latest long-term support version of Java, ensuring modern language features and improvements.
@@ -24,7 +13,7 @@ This project serves as a boilerplate for building pure Jetty 12 (Servlet) using 
 - [**MySQL Database**](https://www.mysql.com/): The database for storing and managing application data.
 
 
-This setup is ideal for jump-starting a Java project with dependency injection, logging, and database connectivity, all contained in a local development environment via Docker Compose.
+This setup is ideal for jump-starting a Jetty 12 (Servlet) project with dependency injection, logging, and database connectivity, all contained in a local development environment via Docker Compose.
 
 # Getting started
 
@@ -39,7 +28,6 @@ This setup is ideal for jump-starting a Java project with dependency injection, 
 ```
 ./mvnw foo
 ```
-
 
 Clone the repository
 
@@ -119,7 +107,45 @@ java -jar target/jetty-12-rest-api-sample-1.0-SNAPSHOT.jar
 mvn clean compile exec:java
 ```
 
-### Delete All Images and Containers
+## Test:
+
+CRUD (create, read, update and delete).
+
+**POST**
+```
+curl --location --request POST 'http://localhost:8080/api/products' \
+--header 'Content-Type: application/json' \
+--data '{
+    "name": "Keyboard2",
+    "price": 50,
+    "quantityInStock": 150
+}'
+```
+**GET**
+```
+curl --location --request GET 'http://localhost:8080/api/products/2'
+```
+**PUT**
+```
+curl --location --request PUT 'http://localhost:8080/api/products/2' \
+--header 'Content-Type: application/json' \
+--data '{
+    "name": "Keyboard2",
+    "price": 50,
+    "quantityInStock": 150
+}'
+```
+**DELETE**
+```
+curl --location --request DELETE 'http://localhost:8080/api/products/2'
+```
+**GET LIST**
+```
+curl --location --request GET 'http://localhost:8080/api/products'
+```
+
+
+## Delete All Images and Containers
 
 ```
 docker rm -f db-container  
