@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration xmlns="https://logging.apache.org/xml/ns"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="https://logging.apache.org/xml/ns https://logging.apache.org/xml/ns/log4j-config-2.xsd">
+  <Appenders>
+    <Console name="CONSOLE" target="SYSTEM_OUT">
+      <!-- Configure JsonTemplateLayout -->
+      <JsonTemplateLayout eventTemplateUri="classpath:log4j2-event-template.json" />
+    </Console>
+    <!-- File Appender (for logs written to an external file) -->
+    <File name="FILE" fileName="logs/application.log" append="true">
+      <JsonTemplateLayout eventTemplateUri="classpath:log4j2-event-template.json" />
+    </File>
+    <!-- Rolling File Appender (optional: use if you want log rotation) -->
+    <RollingFile name="FILE"
+      filePattern="logs/app.%d{yyyy-MM-dd}.%i.log">
+      <JsonTemplateLayout />
+      <Policies>
+        <OnStartupTriggeringPolicy />
+        <SizeBasedTriggeringPolicy />
+        <TimeBasedTriggeringPolicy />
+      </Policies>
+    </RollingFile>
+  </Appenders>
+
+  <Loggers>
+    <Logger name="com.elidaniel92" level="${env:LOG_LEVEL:-INFO}">
+      <AppenderRef ref="FILE" />
+    </Logger>
+    <Root level="${env:LOG_LEVEL:-WARN}">
+      <AppenderRef ref="CONSOLE" />
+    </Root>
+  </Loggers>
+
+</Configuration>

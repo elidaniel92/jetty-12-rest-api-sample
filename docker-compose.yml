@@ -1,0 +1,39 @@
+name: store-system
+services:
+  # Java application
+  app:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.java
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+    env_file:
+      - docker/java-local.env
+    volumes:
+      - ./:/usr/src/app
+  
+  # MySQL database
+  db:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: store
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
+    ports:
+      - "3306:3306"
+    env_file:
+      - docker/mysql-local.env
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER --password=$$MYSQL_PASSWORD
+      start_period: 5s
+      interval: 5s
+      timeout: 5s
+      retries: 10
+volumes:
+  ignore:      

@@ -1,0 +1,11 @@
+# Use an official MySQL runtime as a parent image
+FROM mysql:8
+
+# Uncomment the environment variables if are running the "docker build" command
+ENV MYSQL_ROOT_PASSWORD=root
+ENV MYSQL_DATABASE=store
+ENV MYSQL_USER=admin
+ENV MYSQL_PASSWORD=admin
+
+# Copy the database initialization script to the container
+COPY docker/init.sql /docker-entrypoint-initdb.d/
