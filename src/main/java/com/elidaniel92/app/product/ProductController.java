@@ -29,7 +29,6 @@ public class ProductController extends HttpServlet {
         String pathInfo = req.getPathInfo();
 
         if (pathInfo == null || pathInfo.equals("/")) {
-            // Fetch all products
             try {
                 List<ProductEntity> products = productDAO.getAllProducts();
                 String jsonResponse = objectMapper.writeValueAsString(products); // Use Jackson
@@ -41,7 +40,6 @@ public class ProductController extends HttpServlet {
                 resp.getWriter().write("{\"error\":\"Unable to fetch products\"}");
             }
         } else {
-            // Fetch product by ID
             String[] pathParts = pathInfo.split("/");
             if (pathParts.length > 1) {
                 try {
@@ -67,13 +65,11 @@ public class ProductController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         try {
-            CreateUpdateProductDTO productDTO = objectMapper.readValue(req.getReader(), CreateUpdateProductDTO.class); // Deserialize
-                                                                                                                       // using
-                                                                                                                       // Jackson
+            CreateUpdateProductDTO productDTO = objectMapper.readValue(req.getReader(), CreateUpdateProductDTO.class); 
             ProductEntity product = productDAO.createProduct(productDTO);
             resp.setContentType("application/json");
             resp.setStatus(HttpServletResponse.SC_CREATED);
-            resp.getWriter().write(objectMapper.writeValueAsString(product)); // Serialize using Jackson
+            resp.getWriter().write(objectMapper.writeValueAsString(product));
         } catch (Exception e) {
             log.error("Error creating product", e);
             log.error("Error creating product: " + e.getMessage(), e);
