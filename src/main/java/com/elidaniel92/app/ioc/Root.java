@@ -11,6 +11,7 @@ import com.elidaniel92.app.Bootstrap;
 import com.elidaniel92.app.database.DatabaseConnection;
 import com.elidaniel92.app.product.ProductController;
 import com.elidaniel92.app.product.ProductDAO;
+import com.elidaniel92.app.http.BeforeAfterRequest;
 import com.elidaniel92.app.http.HTTPServer;
 
 public class Root {
@@ -35,6 +36,7 @@ public class Root {
             ProductDAO.class,
             ProductController.class,
             HTTPServer.class,
+            BeforeAfterRequest.class,
             Bootstrap.class
         ));
         Root.injector = injector;

@@ -1,5 +1,6 @@
 package com.elidaniel92.app.http;
 
+import java.util.EnumSet;
 import java.util.Set;
 
 import javax.inject.Singleton;
@@ -13,6 +14,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.elidaniel92.app.product.ProductController;
+
+import jakarta.servlet.DispatcherType;
 
 @Singleton
 public class HTTPServer {
@@ -36,6 +39,9 @@ public class HTTPServer {
         // Create a ServletContextHandler with contextPath.
         ServletContextHandler context = new ServletContextHandler();
         context.setContextPath("/api");
+        
+        context.addFilter(FilterImpl.class, "/*", EnumSet.of(DispatcherType.REQUEST));
+        
         // Link the context to the server.
         crossOriginHandler.setHandler(context);
 
