@@ -21,12 +21,15 @@ import jakarta.servlet.DispatcherType;
 public class HTTPServer {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
+    private Server server;
+    private ServerConnector connector;
+
     public HTTPServer() {
+        this.server = new Server();
+        this.connector = new ServerConnector(server);
     }
 
     public void start(int port) throws Exception {
-        Server server = new Server();
-        ServerConnector connector = new ServerConnector(server);
         connector.setPort(port);
         server.addConnector(connector);
 
@@ -53,4 +56,11 @@ public class HTTPServer {
         server.start();
         log.info("Server started successfully on port " + port);
     }
+
+    public void stop() throws Exception {
+        log.info("Shutting down...");
+        server.stop();
+        log.info("Server shutdown successfully");
+    }
+
 }

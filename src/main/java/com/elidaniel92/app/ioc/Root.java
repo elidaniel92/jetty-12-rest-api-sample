@@ -35,8 +35,8 @@ public class Root {
             DatabaseConnection.class,
             ProductDAO.class,
             ProductController.class,
-            HTTPServer.class,
             BeforeAfterRequest.class,
+            HTTPServer.class,
             Bootstrap.class
         ));
         Root.injector = injector;

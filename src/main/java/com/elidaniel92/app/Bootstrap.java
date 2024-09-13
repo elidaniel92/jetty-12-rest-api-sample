@@ -42,4 +42,20 @@ public class Bootstrap {
             return;
         }
     }
+
+    public void destroy() {
+        log.info("Destroying all services...");
+        try {
+            httpServer.stop();
+            log.info("HTTP server stopped successfully");
+        } catch (Exception e) {
+            log.error("Failed to stop HTTP server", e);
+        }
+        try {
+            databaseConnection.close();
+            log.info("Database connection closed successfully");
+        } catch (SQLException e) {
+            log.error("Failed to close database connection", e);
+        }
+    }
 }

@@ -15,6 +15,12 @@ public class App {
         log.info("Application has been started successfully");
         Injector injector = Root.setting();    
 		var bootstrap = injector.getInstance(Bootstrap.class);
-        bootstrap.initialize();        
+        bootstrap.initialize(); 
+        try {
+            Thread.sleep(5000);
+            bootstrap.destroy();
+        } catch (Exception e) {
+            log.error("Failed", e);
+        }     
     }
 }
